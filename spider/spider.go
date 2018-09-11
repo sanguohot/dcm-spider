@@ -2,6 +2,8 @@ package spider
 
 import (
 	"fmt"
+	"path"
+
 	//"strings"
 
 	"github.com/gocolly/colly"
@@ -50,17 +52,17 @@ func InitSpider(url, output string, maxDepth, concurrence int) {
 		fmt.Printf("Link found: -> %s\n", link)
 		//e.Request.Visit(link)
 		absoluteURL := e.Request.AbsoluteURL(link)
-		err := appendUrlToLocal(output, link, []byte(absoluteURL))
-		if err != nil {
-			fmt.Println(link, "===>", err.Error())
-			return
-		}
+		//err := appendUrlToLocal(output, "url.txt", []byte(fmt.Sprintf("%s\r\n", absoluteURL)))
+		//if err != nil {
+		//	fmt.Println(link, "===>", err.Error())
+		//	return
+		//}
 		data, err := download(absoluteURL)
 		if err != nil {
 			fmt.Println(link, "===>", err.Error())
 			return
 		}
-		err = saveToLocal(output, link, data)
+		err = saveToLocal(path.Join(output, "/data"), link, data)
 		if err != nil {
 			fmt.Println(link, "===>", err.Error())
 			return

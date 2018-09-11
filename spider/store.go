@@ -12,5 +12,15 @@ func saveToLocal(output, name string, data []byte) error {
 
 func appendUrlToLocal(output, name string, data []byte) error {
 	filePath := path.Join(output, name)
-	return ioutil.WriteFile(filePath, data, os.ModeAppend)
+	f, err := os.OpenFile(filePath, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	_, err = f.Write(data)
+	if err != nil {
+		return err
+	}
+	return nil
 }
