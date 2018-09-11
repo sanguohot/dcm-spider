@@ -49,8 +49,12 @@ func InitSpider(url, output string, maxDepth, concurrence int) {
 		link := e.Attr("href")
 		// Print link
 
-		fmt.Printf("Link found: -> %s\n", link)
+
 		//e.Request.Visit(link)
+		if isFileExist(path.Join(output, "/data"), link) {
+			return
+		}
+		fmt.Printf("Link found: -> %s\n", link)
 		absoluteURL := e.Request.AbsoluteURL(link)
 		//err := appendUrlToLocal(output, "url.txt", []byte(fmt.Sprintf("%s\r\n", absoluteURL)))
 		//if err != nil {

@@ -5,9 +5,17 @@ import (
 	"os"
 	"path"
 )
+
+func isFileExist(output, name string) bool {
+	if _, err := os.Stat(path.Join(output, name)); err == nil {
+		// path/to/whatever exists
+		return true
+	}
+	return false
+}
 func saveToLocal(output, name string, data []byte) error {
 	filePath := path.Join(output, name)
-	if _, err := os.Stat(filePath); err == nil {
+	if isFileExist(output, name) {
 		// path/to/whatever exists
 		return nil
 	}
