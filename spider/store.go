@@ -7,6 +7,10 @@ import (
 )
 func saveToLocal(output, name string, data []byte) error {
 	filePath := path.Join(output, name)
+	if _, err := os.Stat(filePath); err == nil {
+		// path/to/whatever exists
+		return nil
+	}
 	return ioutil.WriteFile(filePath, data, 0644)
 }
 
